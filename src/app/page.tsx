@@ -7,6 +7,8 @@ import {
   FaWhatsapp,
 } from 'react-icons/fa';
 
+const basePath = process.env.NODE_ENV === 'production' ? '/portfolio' : '';
+
 export default function Home() {
   return (
     <div>
@@ -56,7 +58,7 @@ export default function Home() {
               </a>
 
               <a
-                href="/resume.pdf"
+                href={`${basePath}/resume.pdf`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="px-6 py-3 border border-gray-300 hover:border-blue-500 rounded-lg transition text-sm text-center w-full sm:w-auto"
@@ -69,7 +71,7 @@ export default function Home() {
           {/* RIGHT */}
           <div className="flex justify-center relative">
             <Image
-              src="/images/george-caricuture.png"
+              src={`${basePath}/images/george-caricuture.png`}
               alt="Developer illustration"
               width={500}
               height={500}
