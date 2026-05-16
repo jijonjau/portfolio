@@ -1,4 +1,7 @@
+'use client';
+
 import Image from 'next/image';
+import { useEffect, useState } from 'react';
 import {
   FaEnvelope,
   FaGithub,
@@ -6,10 +9,23 @@ import {
   FaPhoneAlt,
   FaWhatsapp,
 } from 'react-icons/fa';
+import { HiArrowUp } from 'react-icons/hi';
 
 const basePath = process.env.NODE_ENV === 'production' ? '/portfolio' : '';
 
 export default function Home() {
+  const [showScrollTop, setShowScrollTop] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setShowScrollTop(window.scrollY > 300);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   return (
     <div>
       <section id="home" className="bg-white">
@@ -30,7 +46,7 @@ export default function Home() {
 
             <p className="text-gray-600 mt-6 text-lg leading-relaxed">
               I design and build production-grade backend systems and modern web
-              applications, focusing on scalability, performance, and clean
+              applications, focusing on scalability, performance and clean
               system architecture.
             </p>
 
@@ -100,9 +116,9 @@ export default function Home() {
 
               <p className="text-gray-600 leading-relaxed mb-5">
                 I&apos;m a software engineer who enjoys building
-                production-grade systems that are clean, scalable, and
+                production-grade systems that are clean, scalable and
                 maintainable. My focus is on backend-heavy full-stack
-                development, system design, and performance-oriented
+                development, system design and performance-oriented
                 architecture.
               </p>
 
@@ -115,7 +131,7 @@ export default function Home() {
 
               <p className="text-gray-600 leading-relaxed">
                 I care deeply about writing code that is not just functional,
-                but structured for long-term growth, readability, and real-world
+                but structured for long-term growth, readability and real-world
                 scale.
               </p>
             </div>
@@ -194,8 +210,8 @@ export default function Home() {
 
               <p className="text-gray-600 mb-6 leading-relaxed">
                 A full-stack booking system supporting multi-service travel
-                workflows including flights, vehicle rentals, and structured
-                booking journeys with payment and document handling.
+                workflows including hotels, flights, vehicle rentals and
+                structured booking journeys with payment and document handling.
               </p>
 
               <div className="grid md:grid-cols-2 gap-6">
@@ -289,7 +305,7 @@ export default function Home() {
           <p className="text-gray-600 text-lg leading-relaxed mb-10">
             I&apos;m currently open to full-stack software development
             opportunities and product-driven engineering teams. If you&apos;re
-            building systems that need scalability, structure, and performance —
+            building systems that need scalability, structure and performance —
             I&apos;d be glad to talk.
           </p>
 
@@ -357,6 +373,21 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      {showScrollTop && (
+        <button
+          onClick={() =>
+            window.scrollTo({
+              top: 0,
+              behavior: 'smooth',
+            })
+          }
+          className="fixed bottom-6 right-6 z-50 bg-blue-500 hover:bg-blue-600 text-white p-3 rounded-full shadow-lg transition-all duration-300 hover:scale-110"
+          aria-label="Back to top"
+        >
+          <HiArrowUp className="text-xl" />
+        </button>
+      )}
     </div>
   );
 }
