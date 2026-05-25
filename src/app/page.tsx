@@ -74,7 +74,7 @@ export default function Home() {
               </a>
 
               <a
-                href={`${basePath}/resume.pdf`}
+                href={`${basePath}/RESUME.pdf`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="px-6 py-3 border border-gray-300 hover:border-blue-500 rounded-lg transition text-sm text-center w-full sm:w-auto"

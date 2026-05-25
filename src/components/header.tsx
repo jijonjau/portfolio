@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { FaCode } from 'react-icons/fa';
 
 const links = [
@@ -11,7 +11,27 @@ const links = [
 ];
 
 export default function Header() {
+  const [activeSection, setActiveSection] = useState('#home');
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  useEffect(() => {
+    const sections = document.querySelectorAll('section');
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setActiveSection(`#${entry.target.id}`);
+          }
+        });
+      },
+      { threshold: 0.6 }
+    );
+
+    sections.forEach((section) => observer.observe(section));
+
+    return () => observer.disconnect();
+  }, []);
 
   return (
     <header className="sticky top-0 z-50 bg-white/80 backdrop-blur border-b border-gray-100">
@@ -30,7 +50,12 @@ export default function Header() {
             <a
               key={link.name}
               href={link.href}
-              className="text-gray-600 hover:text-blue-500 transition-colors duration-200"
+              className={`transition-colors duration-200 ${
+                activeSection === link.href
+                  ? 'text-blue-500'
+                  : 'text-gray-600 hover:text-blue-500'
+              }`}
+              // className="text-gray-600 hover:text-blue-500 active:text-blue-500 transition-colors duration-200"
             >
               {link.name}
             </a>
@@ -70,7 +95,12 @@ export default function Header() {
               key={link.name}
               href={link.href}
               onClick={() => setMobileMenuOpen(false)}
-              className="text-gray-600 hover:text-blue-500 text-lg"
+              className={`transition-colors duration-200 ${
+                activeSection === link.href
+                  ? 'text-blue-500'
+                  : 'text-gray-600 hover:text-blue-500'
+              }`}
+              // className="text-gray-600 hover:text-blue-500 text-lg"
             >
               {link.name}
             </a>
